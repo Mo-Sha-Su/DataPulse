@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens. Navy & Sky identity shared across two surfaces:
+   - "paper": clean productivity light workspace (hubs, canvas, marketing)
+   - "lab":   focused dark Data Lab studio
+------------------------------------------------------------------- */
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Navy foundation */
+  --color-navy-950: #08122e;
+  --color-navy-900: #0b1739;
+  --color-navy-800: #132554;
+  --color-navy-700: #1e356d;
+
+  /* Brand Sky Accent */
+  --color-pulse-50: #eff8ff;
+  --color-pulse-100: #dff1ff;
+  --color-pulse-200: #b8e3ff;
+  --color-pulse-300: #78cdff;
+  --color-pulse-400: #38b6fa;
+  --color-pulse-500: #0ba5ec;
+  --color-pulse-600: #0284c7;
+  --color-pulse-700: #0369a1;
+  --color-pulse-900: #0c4a6e;
+
+  /* Secondary indigo/cobalt accent (replaces neon violet gradients) */
+  --color-volt-400: #38bdf8;
+  --color-volt-500: #2563eb;
+  --color-volt-600: #1d4ed8;
+
+  /* Data Lab (dark studio) */
+  --color-lab-bg: #081129;
+  --color-lab-panel: #0d1736;
+  --color-lab-raised: #142249;
+  --color-lab-hover: #1b2c5c;
+  --color-lab-line: #1f315f;
+  --color-lab-line-strong: #2c4178;
+  --color-lab-text: #eef3fc;
+  --color-lab-dim: #97a8cf;
+  --color-lab-faint: #64759e;
+
+  /* Semantic categories used by the Data Lab command bar */
+  --color-cat-clean: #34d399;
+  --color-cat-shape: #38bdf8;
+  --color-cat-columns: #60a5fa;
+  --color-cat-compute: #fbbf24;
+  --color-cat-danger: #fb7185;
+
+  --shadow-glow: 0 0 0 1px rgb(14 165 233 / 0.35), 0 0 20px -4px rgb(14 165 233 / 0.35);
+  --shadow-lift: 0 1px 2px rgb(11 23 57 / 0.04), 0 6px 20px -10px rgb(11 23 57 / 0.08);
+}
+
+html {
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  background-color: #f7f9fc;
+  color: #0b1739;
+  -webkit-font-smoothing: antialiased;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+#root {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+.num, .tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* RTL and Arabic Typography Support */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+  font-family: "Cairo", var(--font-sans);
+}
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+.font-sans-ar {
+  font-family: "Cairo", var(--font-sans);
+}
+
+/* Hidden scrollbar for horizontal scroll strips */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Clean quiet scrollbars */
+.app-scroll { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+.app-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+.app-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+.app-scroll::-webkit-scrollbar-track { background: transparent; }
+
+.lab-scroll { scrollbar-width: thin; scrollbar-color: #2c4178 transparent; }
+.lab-scroll::-webkit-scrollbar { width: 9px; height: 9px; }
+.lab-scroll::-webkit-scrollbar-thumb { background: #2c4178; border-radius: 8px; border: 2px solid #0d1736; }
+.lab-scroll::-webkit-scrollbar-track { background: transparent; }
+
+@keyframes labPop {
+  from { opacity: 0; transform: translateY(6px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+.lab-pop { animation: labPop 0.14s cubic-bezier(0.16, 1, 0.3, 1); }
+
+@keyframes tourStepEnter {
+  from { opacity: 0; transform: translateY(8px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.tour-step-enter { animation: tourStepEnter 220ms cubic-bezier(0.16, 1, 0.3, 1); }
+
+@keyframes tourSpotlightPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgb(14 165 233 / 0.28), 0 0 28px rgb(14 165 233 / 0.45); }
+  50% { box-shadow: 0 0 0 7px rgb(14 165 233 / 0.14), 0 0 36px rgb(14 165 233 / 0.65); }
+}
+.tour-spotlight-ring { animation: tourSpotlightPulse 2.2s ease-in-out infinite; }
+
+.lab-node-live { box-shadow: 0 0 0 3px rgb(56 189 248 / 0.18), 0 0 18px -2px rgb(56 189 248 / 0.48); }
+
+@keyframes homeFadeUp {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.home-fade-up {
+  animation: homeFadeUp 0.52s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes homeScaleX {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.home-scale-x {
+  transform-origin: left;
+  animation: homeScaleX 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes homeGrowY {
+  from { opacity: 0.3; transform: scaleY(0); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+.home-grow-y {
+  transform-origin: bottom;
+  animation: homeGrowY 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes homePop {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+.home-pop {
+  animation: homePop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-pop,
+  .tour-step-enter,
+  .tour-spotlight-ring,
+  .animate-float-1,
+  .animate-float-2,
+  .animate-float-3,
+  .animate-grid-drift,
+  .animate-beam-sweep,
+  .animate-pulse-line,
+  .animate-pulse-line-slow,
+  .animate-band-breathe,
+  .home-fade-up,
+  .home-scale-x,
+  .home-grow-y,
+  .home-pop {
+    animation: none !important;
+  }
+}
+
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgb(11 23 57 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(11 23 57 / 0.045) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+@keyframes gridDrift {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(40px, 40px, 0); }
+}
+
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); }
+  33% { transform: translate3d(48px, 18px, 0) scale(1.07); }
+  66% { transform: translate3d(-36px, -16px, 0) scale(0.96); }
+}
+
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); }
+  50% { transform: translate3d(-56px, 36px, 0) scale(1.1); }
+}
+
+@keyframes floatOrb3 {
+  0%, 100% { transform: translate3d(0px, 0px, 0) scale(1); }
+  50% { transform: translate3d(44px, -32px, 0) scale(1.08); }
+}
+
+@keyframes beamSweep {
+  0% { transform: translate3d(-35%, -20%, 0) rotate(-18deg); opacity: 0; }
+  20% { opacity: 0.55; }
+  80% { opacity: 0.55; }
+  100% { transform: translate3d(135%, 20%, 0) rotate(-18deg); opacity: 0; }
+}
+
+@keyframes pulseLineFlow {
+  0% { stroke-dashoffset: 1600; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes bandBreathe {
+  0%, 100% { opacity: 0.35; transform: translate3d(0, 0, 0); }
+  50% { opacity: 0.72; transform: translate3d(0, -8px, 0); }
+}
+
+.animate-grid-drift { animation: gridDrift 26s linear infinite; }
+.animate-float-1 { animation: floatOrb1 16s ease-in-out infinite; }
+.animate-float-2 { animation: floatOrb2 19s ease-in-out infinite alternate; }
+.animate-float-3 { animation: floatOrb3 15s ease-in-out infinite alternate; }
+.animate-beam-sweep { animation: beamSweep 14s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.animate-pulse-line { animation: pulseLineFlow 9s linear infinite; }
+.animate-pulse-line-slow { animation: pulseLineFlow 14s linear infinite reverse; }
+.animate-band-breathe { animation: bandBreathe 8s ease-in-out infinite; }

@@ -1,0 +1,6 @@
+{
+  "name": "Data Pulse - Dashboard Builder",
+  "description": "No-code visual analytics workspace featuring drag-and-drop widgets, 3D graphs, custom datasets, interactive controls, and configuration panel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
